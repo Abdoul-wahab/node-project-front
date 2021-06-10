@@ -1,15 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from 'axios'
 /*import { stat } from "fs";*/
 Vue.use(Vuex);
+axios.defaults.baseURL = 'http://localhost:5000'//`${process.env.VUE_APP_API_URL}`
 
 export default new Vuex.Store({
   state: {
     profile: {
-        name: "Gilbert",
-        surname: "Ndresaj",
+        name: "ZAKARI",
+        surname: "Abdoul",
         birthDay: new Date(1995, 6, 7),
-        startDescription: "Hello I’m Gilbert",
+        startDescription: "Hello I’m Abdoul",
         description:
             ", a software engineer based in Turin, Italy. Front End developer and #OpenSource enthusiast with industry experience building websites and web applications. I specialize in UI, UX, Node.js, Vue.js and tailwindcss! ",
     },
@@ -198,7 +200,12 @@ export default new Vuex.Store({
             link: "https://open.spotify.com/user/fmlddu645fmfbxo6z10moaydu",
             icon: "spotify" 
         },  
-    ]
+    ],
+
+    //Auth informations
+    status: '',
+    token: localStorage.getItem('token') || '',
+    user : {}
 },
 
     getters: { age: state => {
@@ -210,8 +217,79 @@ export default new Vuex.Store({
         projects: state => state.projects,
         technologies: state => state.technologies,
         events: state => state.events,
-        socials: state => state.socials
+        socials: state => state.socials,
+
+        // Auth informations
+        isLoggedIn: state => !!state.token,
+        authStatus: state => state.status,
     },
-    mutations: {},
-    actions: {}
+    mutations: {
+        auth_request(state){
+            state.status = 'loading'
+        },
+        auth_success(state, token, user){
+            state.status = 'success'
+            state.token = token
+            state.user = user
+        },
+        auth_error(state){
+            state.status = 'error'
+        },
+        logout(state){
+            state.status = ''
+            state.token = ''
+        },
+    },
+    actions: {
+        login({commit}, user){
+            return new Promise((resolve, reject) => {
+                commit('auth_request')
+                axios({url: 'v1/auth/login', data: user, method: 'POST' })
+                .then(resp => {
+                    console.log(resp.data)
+                    const token = resp.data.access_token
+                    const user = resp.data.user
+                    localStorage.setItem('token', token)
+                    axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
+                    commit('auth_success', token, user)
+                    resolve(resp)
+                })
+                .catch(err => {
+                    commit('auth_error')
+                    localStorage.removeItem('token')
+                    reject(err)
+                })
+            })
+        },
+    
+        register({commit}, user){
+            return new Promise((resolve, reject) => {
+                commit('auth_request')
+                axios({url: 'v1/auth/register', data: user, method: 'POST' })
+                .then(resp => {
+                    const token = resp.data.access_token
+                    const user = resp.data.user
+                    localStorage.setItem('token', token)
+                    axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
+                    commit('auth_success', token, user)
+                    resolve(resp)
+                })
+                .catch(err => {
+                    commit('auth_error', err)
+                    localStorage.removeItem('token') 
+                    reject(err)
+                })
+            })
+        },
+    
+        logout({commit}){
+            // eslint-disable-next-line no-unused-vars
+            return new Promise((resolve, reject) => {
+                commit('logout')
+                localStorage.removeItem('token')
+                delete axios.defaults.headers.common['Authorization']
+                resolve()
+            })
+        }
+    }
 });

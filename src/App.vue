@@ -1,5 +1,8 @@
 <template class="overflow-hidden ">
-    <div class="w-full h-full min-w-screen min-h-screen bg-background">
+<div>
+    <dashboard v-if="$store.getters.isLoggedIn && $router.currentRoute.name !== 'home'"></dashboard>
+    <auth-header v-if="!$store.getters.isLoggedIn && $router.currentRoute.name !== 'home'"></auth-header>
+    <div v-if="!$store.getters.isLoggedIn && $router.currentRoute.name === 'home'" class="w-full h-full min-w-screen min-h-screen bg-background">
         <navbar></navbar>
         <div id="pages" class=" sm:w-10/12 lg:w-3/5 sm:m-auto mx-6">
             <home id="Home" class="md:min-h-screen" />
@@ -14,6 +17,7 @@
             </div>
         </footer>
     </div>
+</div>
 </template>
 
 <script>
@@ -23,11 +27,18 @@ import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Projects from "@/views/Projects.vue";
 import Contact from "@/views/Contact.vue";
+import authHeader from "@/layouts/authHeader.vue";
+import dashboard from '@/layouts/dashboard.vue'
 
 
 export default {
 	name: "app",
-	components: { navbar, Home, About, Projects, Contact },
+	components: { navbar, Home, About, Projects, Contact, dashboard,'auth-header': authHeader },
+    computed : {
+        isLoggedIn(){
+            return this.$store.getters.isLoggedIn
+        }
+    },
 	data() {
         return { 
             prevHeight: 0,
