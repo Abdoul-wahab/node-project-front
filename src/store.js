@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from 'axios'
-/*import { stat } from "fs";*/
+
 Vue.use(Vuex);
 axios.defaults.baseURL = 'http://localhost:5000'//`${process.env.VUE_APP_API_URL}`
 
@@ -13,11 +13,13 @@ export default new Vuex.Store({
         birthDay: new Date(1995, 6, 7),
         startDescription: "Hello I’m Abdoul",
         description:
-            ", a software engineer based in Turin, Italy. Front End developer and #OpenSource enthusiast with industry experience building websites and web applications. I specialize in UI, UX, Node.js, Vue.js and tailwindcss! ",
+            ", a full stack developer and #OpenSource enthusiast with industry experience building websites and web applications. I specialize in UI, UX, Node.js, Vue.js and tailwindcss! ",
     },
     technologies: {
         programming:  [
             { name: "HTML & (S)CSS", level: 95 },
+            { name: "PHP", level: 95 },
+            { name: "Python", level: 75 },
             { name: "Javascript (ES6)", level: 95 },
             { name: "Java & JavaEE", level: 90 , },
             { name: "Java for Android", level: 80 , },
@@ -28,8 +30,10 @@ export default new Vuex.Store({
             { name: "Tailwind.css", level: 90 },
             { name: "AngularJS / Angular2+", level: 80 },
             { name: "Bootstrap", level: 80 },
+            { name: "Laravel", level: 90 },
+            { name: "Fluter", level: 70 },
+            { name: "React Native", level: 70 },
             { name: "Node.js & Express.js", level: 70 },
-            { name: "WindiCSS", level: 60 }
         ],
         tools:[
             { name: "git" },
@@ -181,25 +185,21 @@ export default new Vuex.Store({
     ], socials: [
         {
             name: "LinkedIn",
-            link: "https://linkedin.com/in/gilbertndr/",
+            link: "https://www.linkedin.com/in/abdoul-zakari-0b014a19a",
             icon: "linkedin" 
         }, {
             name: "Github",
-            link: "https://github.com/gilnd",
+            link: "https://github.com/Abdoul-wahab/",
             icon: "github" 
         }, {
             name: "Twitter",
-            link: "https://twitter.com/gilbertndr",
+            link: "https://twitter.com/AW_ZAKARI",
             icon: "twitter" 
         }, {
             name: "instagram",
-            link: "https://www.instagram.com/gil.ndr/",
+            link: "https://www.instagram.com/invites/contact/?i=18bx2m67o3b44&utm_content=1182dcd",
             icon: "instagram" 
-        }, {
-            name: "Spotify",
-            link: "https://open.spotify.com/user/fmlddu645fmfbxo6z10moaydu",
-            icon: "spotify" 
-        },  
+        },
     ],
 
     //Auth informations
@@ -246,9 +246,12 @@ export default new Vuex.Store({
                 commit('auth_request')
                 axios({url: 'v1/auth/login', data: user, method: 'POST' })
                 .then(resp => {
-                    console.log(resp.data)
-                    const token = resp.data.access_token
                     const user = resp.data.user
+                    // const token = resp.data.access_token
+                    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGMwMTM3OTQ4MjFjNDg1MDNkYjU4NjUiLCJlbWFpbCI6InRlc3RAbWFpbC5mciIsImZpcnN0bmFtZSI6ImFiZG91bCIsImxhc3RuYW1lIjoiWkFLQVJJIiwibGFzdENvbm5lY3Rpb24iOiIyMDIxLTA2LTA5VDAxOjAyOjAyLjE0OFoiLCJleHBpcmVJbiI6IjVzIiwiZXhwIjoxNjI4NDEwMjIwNiwiaWF0IjoxNjIzMzEyNjIwfQ.17BUr0OaPMDHcD57DViJx_RsJSL27Xr8Rk2QgUwpqMw'
+                    console.log(resp.data.access_token)
+                    console.log(token)
+                    // console.log(resp.data['access_token'])
                     localStorage.setItem('token', token)
                     axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
                     commit('auth_success', token, user)
@@ -267,8 +270,9 @@ export default new Vuex.Store({
                 commit('auth_request')
                 axios({url: 'v1/auth/register', data: user, method: 'POST' })
                 .then(resp => {
-                    const token = resp.data.access_token
                     const user = resp.data.user
+                    // const token = resp.data.access_token
+                    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGMwMTM3OTQ4MjFjNDg1MDNkYjU4NjUiLCJlbWFpbCI6InRlc3RAbWFpbC5mciIsImZpcnN0bmFtZSI6ImFiZG91bCIsImxhc3RuYW1lIjoiWkFLQVJJIiwibGFzdENvbm5lY3Rpb24iOiIyMDIxLTA2LTA5VDAxOjAyOjAyLjE0OFoiLCJleHBpcmVJbiI6IjVzIiwiZXhwIjoxNjI4NDEwMjIwNiwiaWF0IjoxNjIzMzEyNjIwfQ.17BUr0OaPMDHcD57DViJx_RsJSL27Xr8Rk2QgUwpqMw'
                     localStorage.setItem('token', token)
                     axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
                     commit('auth_success', token, user)

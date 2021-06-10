@@ -7,7 +7,7 @@
       @breakpoint="onBreakpoint"
     >
       <div class="logo">
-        Portfolio Dashboard
+        Portfolio
       </div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
         <a-menu-item key="1">
@@ -18,7 +18,7 @@
         </a-menu-item>
 
         <a-menu-item key="2">
-          <router-link to="/commandes" class="nav-text">
+          <router-link to="/experiences" class="nav-text">
             <a-icon type="unordered-list" />
             <span class="nav-text">Experiences</span>
           </router-link>

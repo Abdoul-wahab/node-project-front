@@ -3,8 +3,8 @@ import Home from './views/Home.vue'
 import Register from './auth/Register'
 import Login from './auth/Login'
 import store from './store.js'
-import dashboard from '@/layouts/dashboard.vue'
-
+import Dash from './dashboard/Dash.vue'
+import Experiences from './dashboard/Experiences.vue'
 
 const routes = [
     {
@@ -37,8 +37,17 @@ const routes = [
     {
         path: '/dashboard',
         name: 'dashboard',
-        component: dashboard,
-    }
+        component: Dash,
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: '/experiences',
+        name: 'experiences',
+        component: Experiences,
+    },
 ]
 
 

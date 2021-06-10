@@ -8,7 +8,7 @@
                 I&rsquo;m not currently looking for a fulltime job but my inbox is always open. Whether for a potential project or idea, I&rsquo;ll try my best to answer your email!
             </span><br>
             <button class=" my-8 rounded-sm text-lg p-4 border-2 text-primary-light hover:text-primary-main hover:bg-transparent-primary " 
-                onclick="location.href='mailto:gilbert.ndresaj@gmail.com'">
+                onclick="location.href='mailto:abdoul.zkri@gmail.com'">
                 Say Hello
             </button>
         </div>

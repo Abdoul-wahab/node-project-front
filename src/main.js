@@ -23,10 +23,10 @@ Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://localhost:5000'//`${process.env.VUE_APP_API_URL}`
 Vue.prototype.$axios = axios;
 
-const token = localStorage.getItem('token')
-if (token) {
-  Vue.prototype.$axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
-}
+// const token = localStorage.getItem('token')
+// if (token) {
+//   Vue.prototype.$axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
+// }
 
 new Vue({
   router,

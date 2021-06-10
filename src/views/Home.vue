@@ -10,10 +10,10 @@
         <scene></scene>
         <div class="w-full my-2">
             <div class="text-label-info text-xl">
-                I&rsquo;m a {{age}} years old software engineer based in Turin, Italy,<br> specialized in Webapp development! <br> I also enjoy contributing to open source projects .
+                I&rsquo;m a 23 years, <br> specialized in Web development! <br> I also enjoy contributing to open source projects .
             </div>
             <button class="text-primary-main rounded-sm text-lg p-4 border-2 hover:bg-transparent-primary my-4" 
-                onclick="location.href='mailto:gilbert.ndresaj@gmail.com'">
+                onclick="location.href='mailto:abdoul.zkri@gmail.com'">
                 Get In Touch
             </button>
             <a href="resume.pdf" download>
